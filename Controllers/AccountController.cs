@@ -40,7 +40,7 @@ namespace TimelineApp.Controllers
                     Secure = true,
                     SameSite = SameSiteMode.Strict
                 });
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "TimeLine");
             }
 
             return Unauthorized(); // Return unauthorized if login fails

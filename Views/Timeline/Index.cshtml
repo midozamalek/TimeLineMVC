@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+@model TimelineApp.Models.TimelineViewModel
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>
+        Microblogging App
+    </title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+</head>
+<div class="container mx-auto p-4">
+    <!-- Header -->
+    <header class="flex justify-between items-center py-4">
+        <h1 class="text-2xl font-bold">
+            Microblogging App
+        </h1>
+        <nav>
+            <ul class="flex space-x-4">
+
+                <li>
+                    <a class="text-blue-500" asp-area="" asp-controller="Account" asp-action="Logout">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!-- New Post Form -->
+    <section class="bg-white p-4 rounded shadow-md mb-4">
+        <h2 class="text-xl font-bold mb-2">
+            Create a New Post
+        </h2>
+        <form method="post" enctype="multipart/form-data" class="space-y-4" id="new-post-form" asp-action="SubmitPost" asp-controller="Timeline" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <textarea id="Text" name="Text" class="w-full p-2 border rounded" maxlength="140" required placeholder="Write your post..."></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="file" id="Image" name="Image" class="w-full p-2 border rounded" accept="image/*" required />
+                <div class="invalid-feedback">Please upload an image.</div>
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Post</button>
+
+
+        </form>
+    </section>
+    <!-- Timeline -->
+    <section class="space-y-4" id="timeline">
+        @if (Model.Posts != null && Model.Posts.Count > 0)
+        {
+            @foreach (var post in Model.Posts)
+            {
+                <div class="bg-white p-4 rounded shadow-md">
+                    <div class="flex items-center mb-2">
+                        <img alt="Profile picture of user1" class="w-10 h-10 rounded-full mr-2" height="50" src="https://storage.googleapis.com/a1aa/image/6b4Pqbt3ULoUI95RwHQ21r8WPnRufx6Yx7DdUjFifTd0tbfnA.jpg" width="50" />
+                        <span class="font-bold">
+                            user1
+                        </span>
+                    </div>
+                    <p class="mb-2">
+                        @post.Text.
+                    </p>
+                    <img src="@post.ImageUrl" alt="Sample image attached to the post" class="w-full rounded" height="400" width="600" />
+                    <div class="text-gray-500 text-sm mt-2">
+                        Posted at: @post.CreatedAt.ToString("g")
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center text-muted">No posts found. Be the first to add one!</p>
+        }
+    </section>
+</div>
